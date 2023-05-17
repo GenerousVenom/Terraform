@@ -1,0 +1,17 @@
+---
+users:
+  - name: ansible
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /usr/bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCTWlVLqorGTbI7y9xzxKUC1nMfMfrxc1UJeLHdblBOIYwhgEBE3HRgQ57E2gWveNIasczRV79RVpjs3M8JK2xOxfa/yeEHgJ7k3BH9gWUq7x87hOP2HlQYd3i+/uwAQXu64ui/kv6SLFm/66BhfuSWPrttWw6Ce/U01gO+TF+m1Ab63Yss+U3ap9vV6Ia0LN6hlbW5m/tNI+Nfy2bc7bHh3g6HOvGqDaIoSSPYbNqx0u6XPiJy8vxHz0EfoicqI2vrSNPEazpAh4klq3vJXhcOEnOArY7DNVm8aWU2P5H/QYYaRshxUvwhjYGoJYlruR4di5y6+hq6X7AV6ifNnAhv6eI1HIAVUeZ1o3oPohyooABSRYAMGa5XVRAOU3O8OK5yXWVhMNnfZ4sLWIWsLpZ2sb8zFNRQPvdziWHBOtk27nr3pMo3YvQHI8kTfuHmmKaNc7CAqrLVbw810LMMNv0NX5/55O92L245CwW2AVvjzqm2kgPmMTCpl//VsNb1Znk= root@Ubuntu22
+    package_update: true
+    package_upgrade: true
+runcmd:
+  - echo Insert content successed >> /home/ansible/note.txt
+  - systemctl disable ufw
+  - systemctl stop ufw
+write_files:
+  - path: /etc/hostname
+    content: |
+      host-name-ansible
