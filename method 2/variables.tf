@@ -10,6 +10,7 @@ variable "vnet_address_space" {
   type = list(string)
 }
 
+#* Variable for management zone
 variable "name_of_subnet_dmgmt" {
   type = list(string)
 }
@@ -18,6 +19,15 @@ variable "subnet_address_space_dmgmt" {
   type = list(string)
 }
 
+variable "onpre_public_ip_dmgmt" {
+  type = string
+}
+
+variable "onpre_subnet_space_dmgmt" {
+  type = string
+}
+
+#* Variable for production zone
 variable "name_of_subnet_prd" {
   type = list(string)
 }

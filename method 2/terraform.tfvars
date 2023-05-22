@@ -9,9 +9,12 @@ name_of_rsg = ["sg-sea-dmgmt-rsg-01", "sg-sea-prd-rsg-01", "sg-sea-nonprd-rsg-01
 #* Virtual Network Variables
 vnet_address_space = ["10.80.0.0/22", "10.80.4.0/22", "10.80.5.0/22"]
 
-#* Subnet Variables
+#* Variable for management zone
 name_of_subnet_dmgmt = ["GatewaySubnet", "sg-sea-Jumpboxsnet-sn", "sg-sea-dmgmt-bastionsnet-sn"]
 subnet_address_space_dmgmt = ["10.80.0.0/26", "10.80.11.0/24", "10.80.1.0/26"]
+onpre_public_ip_dmgmt = "113.161.221.2"
+onpre_subnet_space_dmgmt = "10.86.0.0/16"
 
+#* Variable for production zone
 name_of_subnet_prd = ["sg-sea-prd-vnet-01"]
 subnet_address_space_prd = ["10.80.11.0/24"]
