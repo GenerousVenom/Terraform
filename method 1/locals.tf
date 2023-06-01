@@ -10,7 +10,7 @@ locals {
   #* Virtual Network Variables
   vnet_address_space = ["10.80.0.0/22", "10.80.4.0/22", "10.80.8.0/22"]
 
-  #* Subnet Variables
+  #* Variables for management zone
   name_of_subnet_dmgmt = ["GatewaySubnet", "AzureBastionSubnet", "sg-sea-Jumpboxsnet-sn"]
   subnet_address_space_dmgmt = ["10.80.0.0/26", "10.80.1.0/26", "10.80.2.0/26"]
   onpre_public_ip_dmgmt = "113.161.221.2"
@@ -18,9 +18,11 @@ locals {
   name_of_stracc = "thterrastracc"
   name_of_keyvault = "tfkeyvaultsecthinhphung2"
 
+  #* Variables for production zone
   name_of_subnet_prd = ["sg-sea-prd-subnet-01"]
   subnet_address_space_prd = ["10.80.4.0/24"]
 
+  #* Variables for nonproduction zone
   name_of_subnet_nonprd = ["sg-sea-nonprd-subnet-01"]
   subnet_address_space_nonprd = ["10.80.8.0/24"]
 }

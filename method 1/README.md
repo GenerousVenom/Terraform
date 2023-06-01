@@ -25,7 +25,7 @@ In this method, the project will be organized into 4 modules: general, dmgmt, no
 ![plot](Landing%20Zone/Method%201%20nonprd%20v1.1.png)
 
 ## Module Breakdown:
-It’s common to define providers, input variables, and output values in their files. Execute the following breakdown:
+It’s common to define providers, input variables, and output values in their files. Execute the following:
 - provider.tf will be executed first in *terraform init* to pull .terraform file including modules and providers information. This file will execute **around 30s**
 - All variables in locals.tf and variables.tf files will be loaded into memory **in seconds**
 - Modules will be called in main.tf file. All modules will complete after **30-40 minutes** depending on Azure's current workloads. The longest execution is to create Azure Gateway (the record time is ~60 mins)

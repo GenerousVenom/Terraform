@@ -1,8 +1,8 @@
 #* Create network security group
-resource "azurerm_network_security_group" "tf-netsecgrp-prd" {
+resource "azurerm_network_security_group" "tf-netsecgrp-nonprd" {
   location            = var.name_of_location
-  name                = "${split("rsg", var.name_of_rsg[1])[0]}netsecgrp${split("rsg", var.name_of_rsg[1])[1]}"
-  resource_group_name = var.name_of_rsg[0]
+  name                = "${split("rsg", var.name_of_rsg[2])[0]}netsecgrp${split("rsg", var.name_of_rsg[2])[1]}"
+  resource_group_name = var.name_of_rsg[2]
 
   security_rule {
     name                       = "AllowRDP"
@@ -37,71 +37,54 @@ resource "azurerm_network_security_group" "tf-netsecgrp-prd" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
-
-  depends_on = [ 
-    azurerm_resource_group.tf-rg
-  ]
 }
 
 #* Create Subnet
-resource "azurerm_subnet" "tf-prdsubnet" {
-  count                = length(var.name_of_subnet_prd)
-  name                 = var.name_of_subnet_prd[count.index]
-  resource_group_name  = var.name_of_rsg[1]
-  virtual_network_name = "${split("rsg", var.name_of_rsg[1])[0]}vnet${split("rsg", var.name_of_rsg[1])[1]}"
-  address_prefixes     = [var.subnet_address_space_prd[count.index]]
-  depends_on = [ 
-    azurerm_resource_group.tf-rg,
-    azurerm_virtual_network.tf-vnet
-  ]
+resource "azurerm_subnet" "tf-nonprdsubnet" {
+  count                = length(var.name_of_subnet_nonprd)
+  name                 = var.name_of_subnet_nonprd[count.index]
+  resource_group_name  = var.name_of_rsg[2]
+  virtual_network_name = "${split("rsg", var.name_of_rsg[2])[0]}vnet${split("rsg", var.name_of_rsg[2])[1]}"
+  address_prefixes     = [var.subnet_address_space_nonprd[count.index]]
 }
 
-resource "azurerm_subnet_network_security_group_association" "tf-netsecgrpass-prd" {
-  count                     = length(var.name_of_subnet_prd)
-  subnet_id                 = azurerm_subnet.tf-prdsubnet[count.index].id
-  network_security_group_id = azurerm_network_security_group.tf-netsecgrp-prd.id
+resource "azurerm_subnet_network_security_group_association" "tf-netsecgrpass-nonprd" {
+  count                = length(var.name_of_subnet_nonprd)
+  subnet_id                 = azurerm_subnet.tf-nonprdsubnet[count.index].id
+  network_security_group_id = azurerm_network_security_group.tf-netsecgrp-nonprd.id
   depends_on = [ 
-    azurerm_subnet.tf-prdsubnet,
-    azurerm_network_security_group.tf-netsecgrp-prd
+    azurerm_subnet.tf-nonprdsubnet,
+    azurerm_network_security_group.tf-netsecgrp-nonprd
   ]
 }
-
-# resource "azurerm_public_ip" "tf-pubip-prolinux" {
-#   name                = "pubip-prolinux"
-#   resource_group_name = var.name_of_rsg[1]
-#   location            = var.name_of_location
-#   allocation_method   = "Static"
-# }
 
 #* Create Linux VM
-resource "azurerm_network_interface" "tf-prdnwint" {
-  name                = "prdlinux-nic"
+resource "azurerm_network_interface" "tf-nonprdnwint" {
+  name                = "nonprdlinux-nic"
   location            = var.name_of_location
-  resource_group_name = var.name_of_rsg[1]
+  resource_group_name = var.name_of_rsg[2]
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.tf-prdsubnet[0].id
+    subnet_id                     = azurerm_subnet.tf-nonprdsubnet[0].id
     private_ip_address_allocation = "Dynamic"
-    # public_ip_address_id = azurerm_public_ip.tf-pubip-prolinux.id
   }
 
   depends_on = [ 
-    azurerm_subnet_network_security_group_association.tf-netsecgrpass-prd,
-    # azurerm_public_ip.tf-pubip-prolinux
+    azurerm_subnet_network_security_group_association.tf-netsecgrpass-nonprd
   ]
 }
 
-resource "azurerm_linux_virtual_machine" "tf-prdlinux" {
-  name                = "Prd-Linux"
-  resource_group_name = var.name_of_rsg[1]
+resource "azurerm_linux_virtual_machine" "tf-nonprdlinux" {
+  name                = "Nonprd-Linux"
+  resource_group_name = var.name_of_rsg[2]
   location            = var.name_of_location
   size                = "Standard_DS1_v2"
   disable_password_authentication = false
   admin_username      = "adminuser"
   admin_password      = "123qwe!@#QWE"
   network_interface_ids = [
-    azurerm_network_interface.tf-prdnwint.id,
+    azurerm_network_interface.tf-nonprdnwint.id,
   ]
 
   os_disk {

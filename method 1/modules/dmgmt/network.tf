@@ -101,11 +101,19 @@ resource "azurerm_nat_gateway" "tf-natgw" {
 resource "azurerm_nat_gateway_public_ip_association" "example" {
   nat_gateway_id       = azurerm_nat_gateway.tf-natgw.id
   public_ip_address_id = azurerm_public_ip.tf-dmgmtnatgwpubip.id
+  depends_on = [ 
+    azurerm_nat_gateway.tf-natgw,
+    azurerm_public_ip.tf-dmgmtnatgwpubip
+  ]
 }
 
 resource "azurerm_subnet_nat_gateway_association" "tf-subnatgwass" {
   subnet_id      = azurerm_subnet.tf-dmgmtsub[2].id
   nat_gateway_id = azurerm_nat_gateway.tf-natgw.id
+  depends_on = [ 
+    azurerm_subnet.tf-dmgmtsub,
+    azurerm_nat_gateway.tf-natgw
+  ]
 }
 
 # # Create Route table
