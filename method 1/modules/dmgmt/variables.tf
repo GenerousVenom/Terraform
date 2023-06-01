@@ -3,7 +3,7 @@ variable "name_of_location" {
 }
 
 variable "name_of_rsg" {
-  type = list(string)
+  type = string
 }
 
 variable "name_of_subnet_dmgmt" {
@@ -12,6 +12,14 @@ variable "name_of_subnet_dmgmt" {
 
 variable "subnet_address_space_dmgmt" {
   type = list(string)
+}
+
+variable "name_of_stracc" {
+  type = string
+}
+
+variable "name_of_keyvault" {
+  type = string
 }
 
 variable "onpre_public_ip_dmgmt" {

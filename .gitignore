@@ -1,2 +1,12 @@
-method\ 1/.terraform/providers
-method\ 2/.terraform/providers
+# method\ 1/.terraform/providers
+# method\ 2/.terraform/providers
+
+# "**" followed by a slash means match in all directories
+**/.terraform
+**/*.tfstate
+**/*.tfplan
+**/terraform.tfstate.d
+**/terraform.tfstate.backup
+**/.terraform.tfstate.lock.info
+**/*.lock.hcl
+**/~*.*

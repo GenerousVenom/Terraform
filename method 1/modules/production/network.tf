@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "tf-netsecgrp-prd" {
   location            = var.name_of_location
-  name                = "${split("rsg", var.name_of_rsg[1])[0]}netsecgrp${split("rsg", var.name_of_rsg[1])[1]}"
-  resource_group_name = var.name_of_rsg[0]
+  name                = "${split("rsg", var.name_of_rsg)[0]}netsecgrp${split("rsg", var.name_of_rsg)[1]}"
+  resource_group_name = var.name_of_rsg
 
   security_rule {
     name                       = "AllowRDP"
@@ -38,20 +38,20 @@ resource "azurerm_network_security_group" "tf-netsecgrp-prd" {
   }
 }
 
-resource "azurerm_subnet" "tf-sub-prd" {
+resource "azurerm_subnet" "tf-prdsubnet" {
   count                = length(var.name_of_subnet_prd)
   name                 = var.name_of_subnet_prd[count.index]
-  resource_group_name  = var.name_of_rsg[1]
-  virtual_network_name = "${split("rsg", var.name_of_rsg[1])[0]}vnet${split("rsg", var.name_of_rsg[1])[1]}"
+  resource_group_name  = var.name_of_rsg
+  virtual_network_name = "${split("rsg", var.name_of_rsg)[0]}vnet${split("rsg", var.name_of_rsg)[1]}"
   address_prefixes     = [var.subnet_address_space_prd[count.index]]
 }
 
 resource "azurerm_subnet_network_security_group_association" "tf-netsecgrpass-prd" {
   count                     = length(var.name_of_subnet_prd)
-  subnet_id                 = azurerm_subnet.tf-sub-prd[count.index].id
+  subnet_id                 = azurerm_subnet.tf-prdsubnet[count.index].id
   network_security_group_id = azurerm_network_security_group.tf-netsecgrp-prd.id
   depends_on = [ 
-    azurerm_subnet.tf-sub-prd,
+    azurerm_subnet.tf-prdsubnet,
     azurerm_network_security_group.tf-netsecgrp-prd
   ]
 }

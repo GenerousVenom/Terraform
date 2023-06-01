@@ -78,4 +78,8 @@ resource "azurerm_consumption_budget_resource_group" "tf-conbudgetrsg-dmgmt" {
       azurerm_monitor_action_group.tf-monitorgrp-dmgmt.id,
     ]
   }
+
+  depends_on = [ 
+    azurerm_resource_group.tf-rg
+  ]
 }

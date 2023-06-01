@@ -3,7 +3,7 @@ variable "name_of_location" {
 }
 
 variable "name_of_rsg" {
-  type = list(string)
+  type = string
 }
 
 variable "name_of_subnet_prd" {
