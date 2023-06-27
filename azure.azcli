@@ -29,5 +29,12 @@ az vm image list --location eastasia --output table
 az vm list-sizes --location eastasia --query "[?name == 'Standard_NV12ads_A10_v5']" -o table
 
 
-az vm image list --location eastasia --publisher Canonical -o table
 
+
+az vm image list-publishers --location eastasia --query "[?starts_with(name, 'Micro')]" -o table
+
+az vm image list-offers -l eastasia -p WindowsServer -o table
+
+az vm image list-skus -l eastasia -p OpenLogic -f CentOS -o table
+
+az vm image show -l eastasia --urn OpenLogic:CentOS:7.3:latest -o table
