@@ -8,8 +8,8 @@ resource "vsphere_virtual_machine" "tf-vsphere-vm" {
   datastore_id     = var.datastore_id
   folder = each.value.name_of_folder
 
-  num_cpus = 2
-  memory   = 4096
+  num_cpus = each.value.num_cpus
+  memory   = each.value.memory
   guest_id = var.u22_temp_guest_id
   
   network_interface {
