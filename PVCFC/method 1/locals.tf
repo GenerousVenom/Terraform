@@ -2,9 +2,6 @@ locals {
   #* Common Variables
   name_of_location = "Southeast Asia"
 
-  # name_of_rsg = [ "${substr(split(" ", var.name_of_country)[0], 0, 1)}${substr(split(" ", var.name_of_country)[1], 0, 1)}-${substr(split(" ", var.name_of_location)[0], 0, 1)}${substr(split(" ", var.name_of_location)[1], 0, 1)}-dmgmt-rsg-01", 
-  #                 "${substr(split(" ", var.name_of_country)[0], 0, 1)}${substr(split(" ", var.name_of_country)[1], 0, 1)}-${substr(split(" ", var.name_of_location)[0], 0, 1)}${substr(split(" ", var.name_of_location)[1], 0, 1)}-prd-rsg-01", 
-  #                 "${substr(split(" ", var.name_of_country)[0], 0, 1)}${substr(split(" ", var.name_of_country)[1], 0, 1)}-${substr(split(" ", var.name_of_location)[0], 0, 1)}${substr(split(" ", var.name_of_location)[1], 0, 1)}-nonpro-rsg-01"]
   name_of_rsg = ["sg-sea-dmgmt-rsg-01", "sg-sea-prd-rsg-01", "sg-sea-nonprd-rsg-01"]
 
   #* Virtual Network Variables
